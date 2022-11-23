@@ -18,25 +18,40 @@ import com.example.events.dao.ClientJpa;
 import com.example.events.model.ClientModel;
 
 @RestController
-@RequestMapping(path = "events/client")
+@RequestMapping(path = "event/client")
 public class ClientController {
-  //private final clientService;
+  // TODO: Uncomment when service is available
+  // private final clientService;
 
   // @Autowired
   // public ClientController(ClientService clientService)
   // {
-  //     this.clientService = clientService;
+  // this.clientService = clientService;
   // }
-  
+
   @Autowired
   ClientJpa clientJpa;
-  
+
+  /**
+   * Gets a client given some id
+   * 
+   * @param sid - The id of the client we wish to get
+   * @return The Optional<ClientModel>, or error
+   */
+  // TODO: Add logic for if we fail (network error, client doesn't exist)
   @GetMapping(path = "{id}")
   public Optional<ClientModel> getClientById(@PathVariable("id") Long sid) {
     // return clientService.getStudent(sid);
     return clientJpa.findById(sid);
   }
 
+  /**
+   * Adds a new client into the database
+   * 
+   * @param newClient - The client we wish to add
+   * @return The client we added if successful, otherwise some error
+   */
+  // TODO: Add logic for if we fail (client already exists, some other error)
   @PostMapping
   public Optional<ClientModel> addClient(@RequestBody ClientModel newClient) {
     // return clientService.addClient(newClient);
@@ -44,14 +59,21 @@ public class ClientController {
     return clientJpa.findById(newClient.getClientId());
   }
 
+  // TODO: Uncomment and have appropriate PUT logic in the service layer
   // @PutMapping(path = "{id}")
   // public Optional<ClientModel> updateClient(
-  //   @PathVariable("id") Long sid,
-  //   @RequestBody ClientModel updatedClient) {
-  //   // return clientService.updateClient(sid, updatedClient);
+  // @PathVariable("id") Long sid,
+  // @RequestBody ClientModel updatedClient) {
+  // // return clientService.updateClient(sid, updatedClient);
 
   // }
 
+  /**
+   * Deletes a client from the database
+   * 
+   * @param sid - The id of the client we wan tto delete
+   * @return The client we deleted
+   */
   @DeleteMapping(path = "{id}")
   public Optional<ClientModel> deleteClient(@PathVariable("id") Long sid) {
     // return clientService.deleteClient(sid);

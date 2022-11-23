@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
 import com.example.events.model.ClientModel;
 
 @Repository
-public interface ClientJpa extends JpaRepository<ClientModel,Long> {
-  
+public interface ClientJpa extends JpaRepository<ClientModel, Long> {
+
 }
