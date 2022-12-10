@@ -3,14 +3,14 @@
  */
 package com.example.events.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
+@Table(name = "CLIENTS")
 public class ClientModel {
 
-  //
   @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long clientId;
   private String clientFirstName;
   private String clientLastName;
