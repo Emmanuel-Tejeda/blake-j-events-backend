@@ -41,9 +41,9 @@ public class BookingController {
      * @return The new booking if added to the database succesfully
      */
     @PostMapping("event/booking")
-    public Optional<BookingModel> addBooking(@RequestBody BookingModel newbooking){
-        bookingJpa.save(newbooking);
-        return bookingJpa.findById(newbooking.getBookingId());
+    public Optional<BookingModel> addBooking(@RequestBody BookingModel newBooking){
+        bookingJpa.save(newBooking);
+        return bookingJpa.findById(newBooking.getBookingId());
     }
 
     
