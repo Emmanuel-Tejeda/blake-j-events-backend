@@ -3,6 +3,7 @@
  */
 package com.example.events.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +44,18 @@ public class ClientController {
   public Optional<ClientModel> getClientById(@PathVariable("id") Long sid) {
     // return clientService.getStudent(sid);
     return clientJpa.findById(sid);
+  }
+
+   /**
+   * Gets a list of all clients
+   * 
+   * 
+   * @return List<ClientModel>
+   */
+  @GetMapping
+  public List<ClientModel> getClient(){
+    return clientJpa.findAll();
+    
   }
 
   /**
