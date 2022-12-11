@@ -24,7 +24,7 @@ public class BookingControllerTest{
     private MockMvc mockMvc;
 
     /**
-     * Tests getBooking to return 200 status code
+     * Tests getBooking to return 200 status code and checks a random booking for their id and cost
      */
     @Test
     public void getBookings() throws Exception
@@ -39,6 +39,9 @@ public class BookingControllerTest{
 
     }
 
+    /**
+     * Tests getBookingById to return 200 status and make sure object is created by checking for existing ID
+     */
     @Test
     public void getBookingsById() throws Exception {
 
@@ -77,3 +80,4 @@ public class BookingControllerTest{
     }
 
 }
+
