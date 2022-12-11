@@ -4,6 +4,7 @@
 package com.example.events.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "CLIENTS")
@@ -16,8 +17,7 @@ public class ClientModel {
   private String clientLastName;
   private String clientPhoneNumber;
   private String clientEmail;
-  // TODO: Uncomment when booking model is done.
-  // private Set<BookingModel> clientBookings;
+//  private List<BookingModel> clientBookings;
 
   // Getters and Setters
   /**

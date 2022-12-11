@@ -24,12 +24,6 @@ public class ClientController {
   // TODO: Uncomment when service is available
   // private final clientService;
 
-  // @Autowired
-  // public ClientController(ClientService clientService)
-  // {
-  // this.clientService = clientService;
-  // }
-
   @Autowired
   ClientJpa clientJpa;
 

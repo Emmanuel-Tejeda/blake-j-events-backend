@@ -24,7 +24,8 @@ public class BookingControllerTest{
     private MockMvc mockMvc;
 
     /**
-     * Tests getBooking to return 200 status code and checks a random booking for their id and cost
+     * Tests getBooking and checks for a random booking for their id and cost
+     * @StatusCode 200 Ok
      */
     @Test
     public void getBookings() throws Exception
@@ -40,7 +41,8 @@ public class BookingControllerTest{
     }
 
     /**
-     * Tests getBookingById to return 200 status and make sure object is created by checking for existing ID
+     * Tests getBookingById and checks object is created by checking for existing ID
+     * @StatusCode 200 Ok
      */
     @Test
     public void getBookingsById() throws Exception {
@@ -54,10 +56,11 @@ public class BookingControllerTest{
     }
 
     /**
-     * Test to make sure that addBookings returns a 201 created response
+     * Test the post mapping addBookings
+     * @StatusCode 201 created
      */
     @Test
-    public void addBooking() throws Exception {
+    public void saveBooking() throws Exception {
 
         mockMvc.perform(MockMvcRequestBuilders
                         .post("/event/booking")
@@ -69,6 +72,28 @@ public class BookingControllerTest{
                 .andExpect(MockMvcResultMatchers.jsonPath("$.bookingId").exists());;
 
     }
+
+    /**
+     * Test the update mapping in the booking controller
+     * @StatusCode 200 Ok
+     */
+    @Test
+    public void updateBooking()throws Exception {
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .put("/event/booking/{id}", 2)
+                        .content(asJsonString(new BookingModel(2L, 500, "2023-01-23 19:00:00",
+                                1234, "10:00:00","17:00:00")))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.cost").value("500.0"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.budget").value("1234.0"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.contactStartTime").value("10:00:00"));
+
+    }
+
+
 
     //Wrties as a json value as a string
     public static String asJsonString(final Object obj) {
