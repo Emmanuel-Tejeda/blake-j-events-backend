@@ -24,7 +24,6 @@ public class BookingControllerTest{
     private MockMvc mockMvc;
 
     /**
-     *
      * Tests getBooking to return 200 status code
      */
     @Test
@@ -43,11 +42,15 @@ public class BookingControllerTest{
     @Test
     public void getBookingsById() throws Exception {
 
-        this.mockMvc.perform(get("/event/booking/1")).andExpect(status().isOk());
+       mockMvc.perform(MockMvcRequestBuilders
+               .get("/event/booking/{id}", 1)
+               .accept(MediaType.APPLICATION_JSON))
+               .andDo(print())
+               .andExpect(status().isOk())
+               .andExpect(MockMvcResultMatchers.jsonPath("$.bookingId").value(1));
     }
 
     /**
-     *
      * Test to make sure that addBookings returns a 201 created response
      */
     @Test
