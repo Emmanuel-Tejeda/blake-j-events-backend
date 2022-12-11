@@ -4,8 +4,12 @@ package com.example.events.controller;
 import com.example.events.dao.BookingJpa;
 import com.example.events.model.BookingModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 @RestController
@@ -30,7 +34,7 @@ public class BookingController {
      * 
      * @return All the bookings as a list of type BookingModel
      */
-    @GetMapping("event/booking")
+    @GetMapping("event/bookings")
     public List<BookingModel> getBookings(){
       return bookingJpa.findAll();
     }
@@ -41,9 +45,9 @@ public class BookingController {
      * @return The new booking if added to the database succesfully
      */
     @PostMapping("event/booking")
-    public Optional<BookingModel> addBooking(@RequestBody BookingModel newBooking){
+    public ResponseEntity<BookingModel> addBooking(@Valid @RequestBody BookingModel newBooking){
         bookingJpa.save(newBooking);
-        return bookingJpa.findById(newBooking.getBookingId());
+        return new ResponseEntity<BookingModel>(newBooking, HttpStatus.CREATED);
     }
 
     
