@@ -13,6 +13,8 @@ public class BookingModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long bookingId;
     private double cost;
+    //TODO:
+    //Might want to change back to LocalDateTime if we can figure out how to pass efficiently
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone="America/New_York")
     private String consultationDate;
     // Client will have any number of Bookings

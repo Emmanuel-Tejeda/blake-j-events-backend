@@ -53,5 +53,19 @@ public class BookingController {
         return new ResponseEntity<BookingModel>(newBooking, HttpStatus.CREATED);
     }
 
+    /**
+     *
+     * @param newBooking The booking that the user updated
+     * @param id The id of the booking that requires an update
+     * @return The updated booking
+     * @StatusCode 200 Ok
+     */
+    @PutMapping("event/booking/{id}")
+    public ResponseEntity<BookingModel> updateBooking(@Valid @RequestBody BookingModel newBooking, @PathVariable Long id){
+
+        bookingService.updateBooking(newBooking, id);
+        return ResponseEntity.ok(newBooking);
+    }
+
     
 }

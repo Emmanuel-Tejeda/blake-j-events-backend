@@ -38,7 +38,31 @@ public class BookingService {
      * @return The saved booking
      */
     public BookingModel saveBooking(BookingModel bookingModel){
+
         return bookingJpa.save(bookingModel);
+    }
+
+    /**
+     * Updates a booking selected by the ID
+     *
+     * @param newBookingModel the booking the user just sent
+     * @param id of the Booking that needs to be updated
+     * @return updated booking
+     */
+    public BookingModel updateBooking(BookingModel newBookingModel, Long id){
+
+        BookingModel oldBookingModel = bookingJpa.findById(id).orElseThrow();
+
+        oldBookingModel.setCost(newBookingModel.getCost());
+        oldBookingModel.setBudget(newBookingModel.getBudget());
+        oldBookingModel.setConsultationDate(newBookingModel.getConsultationDate());
+        oldBookingModel.setContactStartTime(newBookingModel.getContactStartTime());
+        oldBookingModel.setContactEndTime(newBookingModel.getContactEndTime());
+
+        bookingJpa.save(oldBookingModel);
+
+        return oldBookingModel;
+
     }
 
 
