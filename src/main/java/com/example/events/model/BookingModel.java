@@ -11,17 +11,28 @@ public class BookingModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long bookingId;
+    private Long bookingId;
     private double cost;
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone="America/New_York")
-    private LocalDateTime consultationDate;
+    private String consultationDate;
     // Client will have any number of Bookings
     // private Event event;
     private double budget;
     @JsonFormat(pattern="HH:mm:ss", timezone="America/New_York")
-    private LocalTime contactStartTime;
+    private String  contactStartTime;
     @JsonFormat(pattern="HH:mm:ss", timezone="America/New_York")
-    private LocalTime contactEndTime;
+    private String contactEndTime;
+
+    public BookingModel() {}
+
+    public BookingModel(Long bookingId, double cost, String consultationDate, double budget, String contactStartTime, String contactEndTime) {
+        this.bookingId = bookingId;
+        this.cost = cost;
+        this.consultationDate = consultationDate;
+        this.budget = budget;
+        this.contactStartTime = contactStartTime;
+        this.contactEndTime = contactEndTime;
+    }
 
     // Getters and Setters
 
@@ -30,7 +41,7 @@ public class BookingModel {
      *
      * @return The ID of the Booking
      */
-    public long getBookingId() {
+    public Long getBookingId() {
         return bookingId;
     }
 
@@ -39,7 +50,7 @@ public class BookingModel {
      *
      * @param bookingId - The ID we wish to set it to
      */
-    public void setBookingId(long bookingId) {
+    public void setBookingId(Long bookingId) {
         this.bookingId = bookingId;
     }
 
@@ -66,7 +77,7 @@ public class BookingModel {
      *
      * @return The consultation date of the booking
      */
-    public LocalDateTime getConsultationDate() {
+    public String getConsultationDate() {
         return consultationDate;
     }
 
@@ -75,7 +86,7 @@ public class BookingModel {
      *
      * @param consultationDate - The consulation date we wish to set it to
      */
-    public void setConsultationDate(LocalDateTime consultationDate) {
+    public void setConsultationDate(String consultationDate) {
         this.consultationDate = consultationDate;
     }
 
@@ -112,7 +123,7 @@ public class BookingModel {
      *
      * @return The call availability start time of the booking
      */
-    public LocalTime getContactStartTime() {
+    public String getContactStartTime() {
         return contactStartTime;
     }
 
@@ -121,7 +132,7 @@ public class BookingModel {
      *
      * @param contactStartTime - The bookings call availability start time we wish to set it to
      */
-    public void setContactStartTime(LocalTime contactStartTime) {
+    public void setContactStartTime(String contactStartTime) {
         this.contactStartTime = contactStartTime;
     }
 
@@ -130,7 +141,7 @@ public class BookingModel {
      *
      * @return The call availability start end of the booking
      */
-    public LocalTime getContactEndTime() {
+    public String getContactEndTime() {
         return contactEndTime;
     }
 
@@ -139,7 +150,7 @@ public class BookingModel {
      *
      * @param contactEndTime - The bookings call availability end time we wish to set it to
      */
-    public void setContactEndTime(LocalTime contactEndTime) {
+    public void setContactEndTime(String contactEndTime) {
         this.contactEndTime = contactEndTime;
     }
 }
