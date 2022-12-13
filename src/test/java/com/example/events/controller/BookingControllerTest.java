@@ -95,7 +95,12 @@ public class BookingControllerTest{
 
 
 
-    //Wrties as a json value as a string
+    /**
+     * Receives a java object and converts it into a JSON string
+     *
+     * @param obj The Java object we wish to convert
+     * @return The object as a JSON string
+     */
     public static String asJsonString(final Object obj) {
         try {
             return new ObjectMapper().writeValueAsString(obj);
