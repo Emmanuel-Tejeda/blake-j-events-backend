@@ -19,6 +19,7 @@ target/
 *.iml
 *.ipr
 
+## Ignoring Application.Properties ##
 src/main/resources/application.properties
 
 ### NetBeans ###
