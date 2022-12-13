@@ -35,8 +35,8 @@ public class BookingControllerTest{
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("[4].bookingId").value("5"))
-                .andExpect(MockMvcResultMatchers.jsonPath("[4].cost").value("400.0"));
+                .andExpect(MockMvcResultMatchers.jsonPath("[0].bookingId").value("1"))
+                .andExpect(MockMvcResultMatchers.jsonPath("[0].cost").value("400.0"));
 
     }
 
