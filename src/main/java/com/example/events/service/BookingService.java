@@ -65,5 +65,14 @@ public class BookingService {
 
     }
 
+    /**
+     * Deletes a booking by its associated id
+     *
+     * @param id of the booking we want to delete
+     */
+    public void deleteBooking(Long id){
+        bookingJpa.deleteById(id);
+    }
+
 
 }

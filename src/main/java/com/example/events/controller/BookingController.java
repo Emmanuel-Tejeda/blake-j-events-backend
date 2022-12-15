@@ -3,7 +3,9 @@ package com.example.events.controller;
 
 import com.example.events.model.BookingModel;
 import com.example.events.service.BookingService;
+import org.hibernate.sql.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,52 +22,91 @@ public class BookingController {
   /**
    * Adds a new client into the database
    * 
-   * @param sid - The id of the booking we are looking for
+   * @param id - The id of the booking we are looking for
    * @return The booking if found in the database
    * @StatusCode Returns a 200 status code connection established
    */
     @GetMapping("event/booking/{id}")
-    public BookingModel getBookingById(@PathVariable("id") Long sid){
-
-        return bookingService.getBookingById(sid);
+    public ResponseEntity<BookingModel> getBookingById(@PathVariable("id") Long id){
+        try {
+            return new ResponseEntity<BookingModel>(bookingService.getBookingById(id), HttpStatus.OK);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<BookingModel>(HttpStatus.NOT_FOUND);
+        }
     }
 
     /**
      * Returns all the bookings in database
      * 
      * @return All the bookings as a list of type BookingModel
-     * @StatusCode Returns a 200 status code connection established
+     * @StatusCode 200 Ok | 404 Not Found
      */
-    @GetMapping("event/bookings")
-    public List<BookingModel> getBookings(){
-      return bookingService.getBookings();
+    @GetMapping("event/booking")
+    public ResponseEntity<List> getBookings(){
+
+        try {
+            return new ResponseEntity<>(bookingService.getBookings(), HttpStatus.OK);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     /**
      * 
      * @param newBooking - New booking to be added to the database
      * @return The new booking if added to the database succesfully
-     * @StatusCode Returns a status code of 201 object created
+     * @StatusCode 201 Created || 400 Bad Request
      */
     @PostMapping("event/booking")
     public ResponseEntity<BookingModel> addBooking(@Valid @RequestBody BookingModel newBooking){
-        bookingService.saveBooking(newBooking);
-        return new ResponseEntity<BookingModel>(newBooking, HttpStatus.CREATED);
+
+        try {
+            bookingService.saveBooking(newBooking);
+            return new ResponseEntity<BookingModel>(newBooking, HttpStatus.CREATED);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<BookingModel>(newBooking, HttpStatus.BAD_REQUEST);
+        }
     }
 
     /**
      *
      * @param newBooking The booking that the user updated
      * @param id The id of the booking that requires an update
-     * @return The updated booking
-     * @StatusCode 200 Ok
+     * @return Response Entity
+     * @StatusCode 200 Updated || 204 Not Found
      */
     @PutMapping("event/booking/{id}")
     public ResponseEntity<BookingModel> updateBooking(@Valid @RequestBody BookingModel newBooking, @PathVariable Long id){
 
-        bookingService.updateBooking(newBooking, id);
-        return ResponseEntity.ok(newBooking);
+        try {
+            bookingService.updateBooking(newBooking, id);
+            return new ResponseEntity<BookingModel>(newBooking, HttpStatus.OK);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<BookingModel>(HttpStatus.NO_CONTENT);
+        }
     }
 
+
+    /**
+     *
+     * @param id of BookingModel to be deleted
+     * @return Status code
+     * @StatusCode 204 No Content || 404 Not Found
+     */
+    @DeleteMapping("event/booking/{id}")
+    public ResponseEntity<BookingModel> deleteBooking(@PathVariable Long id) throws Exception {
+
+        try {
+            bookingService.deleteBooking(id);
+            return new ResponseEntity<BookingModel>(HttpStatus.NO_CONTENT);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
     
 }
