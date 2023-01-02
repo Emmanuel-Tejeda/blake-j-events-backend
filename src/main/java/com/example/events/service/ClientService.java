@@ -16,39 +16,39 @@ public class ClientService {
     /**
      * Queries the database for the ClientModel with the matching ID
      *
-     * @param id the Id of the Booking we want to get
+     * @param id the Id of the Client we want to get
      * @return requested ClientModel Object
      */
-    public ClientModel getBookingById(Long id){
+    public ClientModel getClientById(Long id){
         return clientJpa.findById(id).orElseThrow();
     }
 
     /**
-     * Gets a list of Bookings
+     * Gets a list of Clients
      *
      * @return List of ClientModel
      */
-    public List<ClientModel> getBookings(){
+    public List<ClientModel> getClient(){
         return clientJpa.findAll();
     }
 
     /**
-     * Saves the booking we add
+     * Saves the Client we add
      *
-     * @param ClientModel the booking we want to save
-     * @return The saved booking
+     * @param ClientModel the Client we want to save
+     * @return The saved Client
      */
-    public ClientModel saveBooking(ClientModel ClientModel){
+    public ClientModel saveClient(ClientModel ClientModel){
 
         return clientJpa.save(ClientModel);
     }
 
     /**
-     * Updates a booking selected by the ID
+     * Updates a Client selected by the ID
      *
-     * @param newClientModel the booking the user just sent
-     * @param id of the Booking that needs to be updated
-     * @return updated booking
+     * @param newClientModel the Client the user just sent
+     * @param id of the Client that needs to be updated
+     * @return updated Client
      */
     public ClientModel updateClient(ClientModel newClientModel, Long id){
 
@@ -68,11 +68,11 @@ public class ClientService {
     }
 
     /**
-     * Deletes a booking by its associated id
+     * Deletes a Client by its associated id
      *
-     * @param id of the booking we want to delete
+     * @param id of the Client we want to delete
      */
-    public void deleteBooking(Long id){
+    public void deleteClient(Long id){
         clientJpa.deleteById(id);
     }
 }
