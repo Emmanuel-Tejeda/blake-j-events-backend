@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping(path = "event/client")
 public class ClientController {
   // TODO: Uncomment when service is available
   // private final clientService;
@@ -65,7 +64,7 @@ public class ClientController {
    * @return The new Client if added to the database succesfully
    * @StatusCode 201 Created || 400 Bad Request
    */
-  @PostMapping("event/Client")
+  @PostMapping("event/client")
   public ResponseEntity<ClientModel> addClient (@Valid @RequestBody ClientModel newClient){
 
     try {
@@ -84,7 +83,7 @@ public class ClientController {
    * @return Response Entity
    * @StatusCode 200 Updated || 204 Not Found
    */
-  @PutMapping("event/Client/{id}")
+  @PutMapping("event/client/{id}")
   public ResponseEntity<ClientModel> updateClient (@Valid @RequestBody ClientModel
                                                              newClient, @PathVariable Long id){
 
@@ -103,7 +102,7 @@ public class ClientController {
    * @return Status code
    * @StatusCode 204 No Content || 404 Not Found
    */
-  @DeleteMapping("event/Client/{id}")
+  @DeleteMapping("event/client/{id}")
   public ResponseEntity<ClientModel> deleteClient (@PathVariable Long id) throws Exception {
 
     try {

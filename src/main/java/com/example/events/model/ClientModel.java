@@ -17,7 +17,19 @@ public class ClientModel {
   private String clientLastName;
   private String clientPhoneNumber;
   private String clientEmail;
-//  private List<BookingModel> clientBookings;
+
+  public ClientModel() {
+  }
+
+  public ClientModel(Long clientId, String clientFirstName, String clientLastName, String clientPhoneNumber, String clientEmail) {
+    this.clientId = clientId;
+    this.clientFirstName = clientFirstName;
+    this.clientLastName = clientLastName;
+    this.clientPhoneNumber = clientPhoneNumber;
+    this.clientEmail = clientEmail;
+  }
+
+  //  private List<BookingModel> clientBookings;
 
   // Getters and Setters
   /**
