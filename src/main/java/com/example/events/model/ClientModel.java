@@ -110,38 +110,5 @@ public class ClientModel {
     this.clientEmail = clientEmail;
   }
 
-  // TODO: Uncomment and test all booking related stuff after bookings are there
-  // /**
-  // * Returns the client's bookings
-  // * @returns The set of bookings
-  // */
-  // public Set<BookingModel> getBookings() {
-  // return clientBookings;
-  // }
-
-  // /**
-  // * Adds a booking for the client
-  // * @param booking - The booking to add to the set of bookings
-  // */
-  // public void addClientBooking(BookingModel newBooking) {
-  // clientBookings.add(newBooking);
-  // }
-
-  // /**
-  // * Removes a booking for the client
-  // * @param booking - The booking to remove
-  // */
-  // public void removeClientBooking(BookingModel booking) {
-  // clientBookings.remove(booking);
-  // }
-
-  // /**
-  // * Overload method for removing bookings, to use id
-  // * @param bookingId - The id of the booking to be removed
-  // */
-  // public void removeClientBooking(Long bookingId) {
-  // clientBookings.forEach(booking -> clientBookings.removeIf(o ->
-  // o.getBookingId() == booking.getBookingId()));
-  // }
 
 }

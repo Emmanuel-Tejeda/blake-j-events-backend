@@ -28,7 +28,7 @@ public class ClientService {
      *
      * @return List of ClientModel
      */
-    public List<ClientModel> getClient(){
+    public List<ClientModel> getClients(){
         return clientJpa.findAll();
     }
 
