@@ -65,7 +65,6 @@ public class BookingService {
 
     }
 
-<<<<<<< HEAD
     /**
      * Deletes a booking by its associated id
      *
@@ -74,8 +73,5 @@ public class BookingService {
     public void deleteBooking(Long id){
         bookingJpa.deleteById(id);
     }
-
-=======
->>>>>>> f38d6724d07015f32fa7bd5f8eb5c3a292651f47
 
 }

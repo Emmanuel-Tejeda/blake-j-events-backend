@@ -4,92 +4,113 @@
 package com.example.events.controller;
 
 import java.util.List;
-import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.example.events.dao.ClientJpa;
 import com.example.events.model.ClientModel;
 
+import com.example.events.service.ClientService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+
+import javax.validation.Valid;
+
 @RestController
-@RequestMapping(path = "event/client")
 public class ClientController {
   // TODO: Uncomment when service is available
   // private final clientService;
 
   @Autowired
-  ClientJpa clientJpa;
-
-  /**
-   * Gets a client given some id
-   * 
-   * @param sid - The id of the client we wish to get
-   * @return The Optional<ClientModel>, or error
-   */
-  // TODO: Add logic for if we fail (network error, client doesn't exist)
-  @GetMapping(path = "{id}")
-  public Optional<ClientModel> getClientById(@PathVariable("id") Long sid) {
-    // return clientService.getStudent(sid);
-    return clientJpa.findById(sid);
-  }
-
-   /**
-   * Gets a list of all clients
-   * 
-   * 
-   * @return List<ClientModel>
-   */
-  @GetMapping
-  public List<ClientModel> getClient(){
-    return clientJpa.findAll();
-    
-  }
+  ClientService clientService;
 
   /**
    * Adds a new client into the database
-   * 
-   * @param newClient - The client we wish to add
-   * @return The client we added if successful, otherwise some error
+   *
+   * @param id - The id of the client we are looking for
+   * @return The client if found in the database
+   * @StatusCode Returns a 200 status code connection established
    */
-  // TODO: Add logic for if we fail (client already exists, some other error)
-  @PostMapping
-  public Optional<ClientModel> addClient(@RequestBody ClientModel newClient) {
-    // return clientService.addClient(newClient);
-    clientJpa.save(newClient);
-    return clientJpa.findById(newClient.getClientId());
+  @GetMapping("event/client/{id}")
+  public ResponseEntity<ClientModel> getClientById(@PathVariable("id") Long id) {
+    try {
+      return new ResponseEntity<ClientModel>(clientService.getClientById(id), HttpStatus.OK);
+    } catch (Exception e) {
+      e.printStackTrace();
+      return new ResponseEntity<ClientModel>(HttpStatus.NOT_FOUND);
+    }
   }
 
-  // TODO: Uncomment and have appropriate PUT logic in the service layer
-  // @PutMapping(path = "{id}")
-  // public Optional<ClientModel> updateClient(
-  // @PathVariable("id") Long sid,
-  // @RequestBody ClientModel updatedClient) {
-  // // return clientService.updateClient(sid, updatedClient);
+  /**
+   * Returns all the clients in database
+   *
+   * @return All the clients as a list of type ClientModel
+   * @StatusCode 200 Ok | 404 Not Found
+   */
+  @GetMapping("event/client")
+  public ResponseEntity<List> getClients () {
 
-  // }
+    try {
+      return new ResponseEntity<>(clientService.getClients(), HttpStatus.OK);
+    } catch (Exception e) {
+      e.printStackTrace();
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+  }
 
   /**
-   * Deletes a client from the database
-   * 
-   * @param sid - The id of the client we wan tto delete
-   * @return The client we deleted
+   *
+   * @param newClient - New Client to be added to the database
+   * @return The new Client if added to the database succesfully
+   * @StatusCode 201 Created || 400 Bad Request
    */
-  @DeleteMapping(path = "{id}")
-  public Optional<ClientModel> deleteClient(@PathVariable("id") Long sid) {
-    // return clientService.deleteClient(sid);
-    boolean exists = clientJpa.existsById(sid);
-    if (!exists) {
-      throw new IllegalStateException("Client with id " + sid + "does not exist");
+  @PostMapping("event/client")
+  public ResponseEntity<ClientModel> addClient (@Valid @RequestBody ClientModel newClient){
+
+    try {
+      clientService.saveClient(newClient);
+      return new ResponseEntity<ClientModel>(newClient, HttpStatus.CREATED);
+    } catch (Exception e) {
+      e.printStackTrace();
+      return new ResponseEntity<ClientModel>(newClient, HttpStatus.BAD_REQUEST);
     }
-    Optional<ClientModel> deletedClient = clientJpa.findById(sid);
-    clientJpa.deleteById(sid);
-    return deletedClient;
+  }
+
+  /**
+   *
+   * @param newClient The Client that the user updated
+   * @param id The id of the Client that requires an update
+   * @return Response Entity
+   * @StatusCode 200 Updated || 204 Not Found
+   */
+  @PutMapping("event/client/{id}")
+  public ResponseEntity<ClientModel> updateClient (@Valid @RequestBody ClientModel
+                                                             newClient, @PathVariable Long id){
+
+    try {
+      clientService.updateClient(newClient, id);
+      return new ResponseEntity<ClientModel>(newClient, HttpStatus.OK);
+    } catch (Exception e) {
+      e.printStackTrace();
+      return new ResponseEntity<ClientModel>(HttpStatus.NO_CONTENT);
+    }
+  }
+
+  /**
+   *
+   * @param id of ClientModel to be deleted
+   * @return Status code
+   * @StatusCode 204 No Content || 404 Not Found
+   */
+  @DeleteMapping("event/client/{id}")
+  public ResponseEntity<ClientModel> deleteClient (@PathVariable Long id) throws Exception {
+
+    try {
+      clientService.deleteClient(id);
+      return new ResponseEntity<ClientModel>(HttpStatus.NO_CONTENT);
+    } catch (Exception e) {
+      e.printStackTrace();
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
   }
 }
