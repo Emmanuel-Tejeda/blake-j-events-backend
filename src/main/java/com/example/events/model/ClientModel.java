@@ -3,6 +3,8 @@
  */
 package com.example.events.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -18,18 +20,22 @@ public class ClientModel {
   private String clientPhoneNumber;
   private String clientEmail;
 
+  @JsonIgnore
+  @OneToMany(mappedBy = "client")
+  private List<BookingModel> clientBookings;
+
   public ClientModel() {
   }
 
-  public ClientModel(Long clientId, String clientFirstName, String clientLastName, String clientPhoneNumber, String clientEmail) {
+
+  public ClientModel(Long clientId, String clientFirstName, String clientLastName, String clientPhoneNumber, String clientEmail, List<BookingModel> clientBookings) {
     this.clientId = clientId;
     this.clientFirstName = clientFirstName;
     this.clientLastName = clientLastName;
     this.clientPhoneNumber = clientPhoneNumber;
     this.clientEmail = clientEmail;
+    this.clientBookings = clientBookings;
   }
-
-  //  private List<BookingModel> clientBookings;
 
   // Getters and Setters
   /**
@@ -120,6 +126,14 @@ public class ClientModel {
    */
   public void setClientEmail(String clientEmail) {
     this.clientEmail = clientEmail;
+  }
+
+  public List<BookingModel> getClientBookings() {
+    return clientBookings;
+  }
+
+  public void setClientBookings(BookingModel clientBookings) {
+    this.clientBookings.add(clientBookings);
   }
 
 

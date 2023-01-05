@@ -38,7 +38,7 @@ class ClientControllerTest {
 
         mockMvc.perform(MockMvcRequestBuilders
                         .post("/event/client")
-                        .content(asJsonString(new ClientModel(null, "Emmanuel", "Tejeda", "401-481-5645","eman@gmail.com")))
+                        .content(asJsonString(new ClientModel(null, "Emmanuel", "Tejeda", "401-481-5645","eman@gmail.com", null)))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
@@ -93,7 +93,7 @@ class ClientControllerTest {
 
         mockMvc.perform(MockMvcRequestBuilders
                         .put("/event/client/{id}", 1)
-                        .content(asJsonString(new ClientModel(1L, "Jessabella", "Baez", "401-470-3753","jessie@gmail.com")))
+                        .content(asJsonString(new ClientModel(1L, "Jessabella", "Baez", "401-470-3753","jessie@gmail.com", null)))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())

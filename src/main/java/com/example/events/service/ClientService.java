@@ -1,10 +1,11 @@
 package com.example.events.service;
 
+import com.example.events.dao.BookingJpa;
 import com.example.events.dao.ClientJpa;
+import com.example.events.model.BookingModel;
 import com.example.events.model.ClientModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
@@ -12,6 +13,9 @@ public class ClientService {
 
     @Autowired
     private ClientJpa clientJpa;
+
+    @Autowired
+    private BookingJpa bookingJpa;
 
     /**
      * Queries the database for the ClientModel with the matching ID
@@ -59,8 +63,6 @@ public class ClientService {
         oldClientModel.setClientLastName(newClientModel.getClientLastName());
         oldClientModel.setClientPhoneNumber(newClientModel.getClientPhoneNumber());
 
-
-
         clientJpa.save(oldClientModel);
 
         return oldClientModel;
@@ -74,5 +76,22 @@ public class ClientService {
      */
     public void deleteClient(Long id){
         clientJpa.deleteById(id);
+    }
+
+
+    /**
+     * Adds a booking to the clients booking list
+     *
+     * @param clientId of the Client
+     * @param bookingId the booking we want to add
+     */
+    public ClientModel addClientBooking(Long clientId, Long bookingId){
+
+        ClientModel client = clientJpa.findById(clientId).orElseThrow();
+        BookingModel booking = bookingJpa.findById(bookingId).orElseThrow();
+
+        client.setClientBookings(booking);
+
+        return client;
     }
 }

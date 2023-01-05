@@ -4,6 +4,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.example.events.model.BookingModel;
+import com.example.events.model.ClientModel;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.Test;
@@ -30,6 +31,10 @@ public class BookingControllerTest {
      *
      * @StatusCode 201 created
      */
+
+
+    ClientModel client = new ClientModel();
+
     @Test
     @Order(1)
     public void saveBooking() throws Exception {
@@ -37,7 +42,7 @@ public class BookingControllerTest {
         mockMvc.perform(MockMvcRequestBuilders
                         .post("/event/booking")
                         .content(asJsonString(new BookingModel(null, 400, "2022-12-24 15:00:00",
-                                1000, "08:00:00", "14:00:00")))
+                                1000, "08:00:00", "14:00:00", client)))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
@@ -94,7 +99,7 @@ public class BookingControllerTest {
         mockMvc.perform(MockMvcRequestBuilders
                         .put("/event/booking/{id}", 1)
                         .content(asJsonString(new BookingModel(2L, 500, "2023-01-23 19:00:00",
-                                1234, "10:00:00", "17:00:00")))
+                                1234, "10:00:00", "17:00:00", client)))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())

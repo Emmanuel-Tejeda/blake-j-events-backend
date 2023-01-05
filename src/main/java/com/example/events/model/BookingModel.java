@@ -1,6 +1,7 @@
 package com.example.events.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.time.*;
 import javax.persistence.*;
@@ -18,22 +19,38 @@ public class BookingModel {
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone="America/New_York")
     private String consultationDate;
     // Client will have any number of Bookings
-    // private Event event;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "client_id")
+    private ClientModel client;
+
     private double budget;
     @JsonFormat(pattern="HH:mm:ss", timezone="America/New_York")
     private String  contactStartTime;
     @JsonFormat(pattern="HH:mm:ss", timezone="America/New_York")
     private String contactEndTime;
 
+
+
+
     public BookingModel() {}
 
-    public BookingModel(Long bookingId, double cost, String consultationDate, double budget, String contactStartTime, String contactEndTime) {
+    public BookingModel(Long bookingId, double cost, String consultationDate, double budget, String contactStartTime, String contactEndTime, ClientModel client) {
         this.bookingId = bookingId;
         this.cost = cost;
         this.consultationDate = consultationDate;
         this.budget = budget;
         this.contactStartTime = contactStartTime;
         this.contactEndTime = contactEndTime;
+        this.client = client;
+    }
+
+    public ClientModel getClient() {
+        return client;
+    }
+
+    public void setClient(ClientModel client) {
+        this.client = client;
     }
 
     // Getters and Setters
@@ -155,4 +172,6 @@ public class BookingModel {
     public void setContactEndTime(String contactEndTime) {
         this.contactEndTime = contactEndTime;
     }
+
+
 }
