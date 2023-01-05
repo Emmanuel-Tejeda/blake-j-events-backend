@@ -58,7 +58,7 @@ public class BookingService {
         oldBookingModel.setConsultationDate(newBookingModel.getConsultationDate());
         oldBookingModel.setContactStartTime(newBookingModel.getContactStartTime());
         oldBookingModel.setContactEndTime(newBookingModel.getContactEndTime());
-        oldBookingModel.setClient(newBookingModel.getClient());
+        oldBookingModel.setMyClient(newBookingModel.getMyClient());
 
         bookingJpa.save(oldBookingModel);
 

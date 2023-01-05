@@ -90,7 +90,8 @@ public class ClientService {
         ClientModel client = clientJpa.findById(clientId).orElseThrow();
         BookingModel booking = bookingJpa.findById(bookingId).orElseThrow();
 
-        client.setClientBookings(booking);
+        client.addBooking(booking);
+        clientJpa.save(client);
 
         return client;
     }

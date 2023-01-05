@@ -3,13 +3,15 @@
  */
 package com.example.events.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.util.List;
 
-@Entity
-@Table(name = "CLIENTS")
+@Entity(name = "Clients")
+@Table(name = "clients")
 public class ClientModel {
 
   @Id
@@ -20,8 +22,12 @@ public class ClientModel {
   private String clientPhoneNumber;
   private String clientEmail;
 
-  @JsonIgnore
-  @OneToMany(mappedBy = "client")
+  @OneToMany(
+          mappedBy = "myClient",
+          cascade = CascadeType.ALL,
+          orphanRemoval = true
+  )
+  @JsonManagedReference
   private List<BookingModel> clientBookings;
 
   public ClientModel() {
@@ -132,9 +138,28 @@ public class ClientModel {
     return clientBookings;
   }
 
-  public void setClientBookings(BookingModel clientBookings) {
-    this.clientBookings.add(clientBookings);
+  public void setClientBookings(List<BookingModel> clientBookings) {
+    this.clientBookings = clientBookings;
   }
 
+  /**
+   * adds a booking from the client
+   *
+   * @param booking the booking we want to remove
+   */
+  public void addBooking(BookingModel booking) {
+    this.clientBookings.add(booking);
+    booking.setMyClient(this);
+  }
+
+  /**
+   * removes a booking from the client
+   *
+   * @param booking
+   */
+  public void removeComment(BookingModel booking) {
+    this.clientBookings.remove(booking);
+    booking.setMyClient(null);
+  }
 
 }

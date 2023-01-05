@@ -116,6 +116,8 @@ public class ClientController {
 
   /**
    *
+   * Adds a booking to a client
+   *
    * @param clientId of Client
    * @param bookingId of the booking
    * @return Status code
@@ -125,8 +127,8 @@ public class ClientController {
   public ResponseEntity<ClientModel> addBooking(@PathVariable Long clientId,
                                                 @PathVariable Long bookingId){
     try{
-      clientService.addClientBooking(clientId, bookingId);
-      return new ResponseEntity<ClientModel>(HttpStatus.OK);
+      ClientModel clientModel = clientService.addClientBooking(clientId, bookingId);
+      return new ResponseEntity<ClientModel>(clientModel, HttpStatus.OK);
     }catch(Exception e){
       e.printStackTrace();
       return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
