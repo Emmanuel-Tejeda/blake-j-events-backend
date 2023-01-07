@@ -5,7 +5,6 @@ package com.example.events.controller;
 
 import java.util.List;
 
-import com.example.events.model.BookingModel;
 import com.example.events.model.ClientModel;
 
 import com.example.events.service.ClientService;
