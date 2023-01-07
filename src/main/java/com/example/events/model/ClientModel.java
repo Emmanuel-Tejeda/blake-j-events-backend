@@ -3,11 +3,15 @@
  */
 package com.example.events.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.List;
 
-@Entity
-@Table(name = "CLIENTS")
+@Entity(name = "Clients")
+@Table(name = "clients")
 public class ClientModel {
 
   @Id
@@ -18,18 +22,26 @@ public class ClientModel {
   private String clientPhoneNumber;
   private String clientEmail;
 
+  @OneToMany(
+          mappedBy = "myClient",
+          cascade = CascadeType.ALL,
+          orphanRemoval = true
+  )
+  @JsonManagedReference
+  private List<BookingModel> clientBookings;
+
   public ClientModel() {
   }
 
-  public ClientModel(Long clientId, String clientFirstName, String clientLastName, String clientPhoneNumber, String clientEmail) {
+
+  public ClientModel(Long clientId, String clientFirstName, String clientLastName, String clientPhoneNumber, String clientEmail, List<BookingModel> clientBookings) {
     this.clientId = clientId;
     this.clientFirstName = clientFirstName;
     this.clientLastName = clientLastName;
     this.clientPhoneNumber = clientPhoneNumber;
     this.clientEmail = clientEmail;
+    this.clientBookings = clientBookings;
   }
-
-  //  private List<BookingModel> clientBookings;
 
   // Getters and Setters
   /**
@@ -122,5 +134,32 @@ public class ClientModel {
     this.clientEmail = clientEmail;
   }
 
+  public List<BookingModel> getClientBookings() {
+    return clientBookings;
+  }
+
+  public void setClientBookings(List<BookingModel> clientBookings) {
+    this.clientBookings = clientBookings;
+  }
+
+  /**
+   * adds a booking from the client
+   *
+   * @param booking the booking we want to remove
+   */
+  public void addBooking(BookingModel booking) {
+    this.clientBookings.add(booking);
+    booking.setMyClient(this);
+  }
+
+  /**
+   * removes a booking from the client
+   *
+   * @param booking
+   */
+  public void removeComment(BookingModel booking) {
+    this.clientBookings.remove(booking);
+    booking.setMyClient(null);
+  }
 
 }

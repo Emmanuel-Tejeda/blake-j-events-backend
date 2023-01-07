@@ -18,8 +18,6 @@ import javax.validation.Valid;
 
 @RestController
 public class ClientController {
-  // TODO: Uncomment when service is available
-  // private final clientService;
 
   @Autowired
   ClientService clientService;
@@ -113,4 +111,30 @@ public class ClientController {
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
   }
+
+
+  /**
+   *
+   * Adds a booking to a client
+   *
+   * @param clientId of Client
+   * @param bookingId of the booking
+   * @return Status code
+   * @StatusCode 200 Ok | 400 bad request
+   */
+  @PutMapping("event/client/{clientId}/booking/{bookingId}")
+  public ResponseEntity<ClientModel> addBooking(@PathVariable Long clientId,
+                                                @PathVariable Long bookingId){
+    try{
+      ClientModel clientModel = clientService.addClientBooking(clientId, bookingId);
+      return new ResponseEntity<ClientModel>(clientModel, HttpStatus.OK);
+    }catch(Exception e){
+      e.printStackTrace();
+      return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+  }
+
+
+
+
 }

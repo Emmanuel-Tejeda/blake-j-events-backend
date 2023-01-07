@@ -1,24 +1,29 @@
 package com.example.events.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.time.*;
 import javax.persistence.*;
 
-@Entity
-@Table(name = "BOOKINGS")
+@Entity(name = "Bookings")
+@Table(name = "bookings")
 public class BookingModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long bookingId;
     private double cost;
-    //TODO:
-    //Might want to change back to LocalDateTime if we can figure out how to pass efficiently
+
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone="America/New_York")
     private String consultationDate;
-    // Client will have any number of Bookings
-    // private Event event;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
+    private ClientModel myClient;
+
     private double budget;
     @JsonFormat(pattern="HH:mm:ss", timezone="America/New_York")
     private String  contactStartTime;
@@ -27,13 +32,22 @@ public class BookingModel {
 
     public BookingModel() {}
 
-    public BookingModel(Long bookingId, double cost, String consultationDate, double budget, String contactStartTime, String contactEndTime) {
+    public BookingModel(Long bookingId, double cost, String consultationDate, double budget, String contactStartTime, String contactEndTime, ClientModel client) {
         this.bookingId = bookingId;
         this.cost = cost;
         this.consultationDate = consultationDate;
         this.budget = budget;
         this.contactStartTime = contactStartTime;
         this.contactEndTime = contactEndTime;
+        this.myClient = client;
+    }
+
+    public ClientModel getMyClient() {
+        return myClient;
+    }
+
+    public void setMyClient(ClientModel myClient) {
+        this.myClient = myClient;
     }
 
     // Getters and Setters
@@ -92,15 +106,6 @@ public class BookingModel {
         this.consultationDate = consultationDate;
     }
 
-    //TODO add Event relationship.
-
-    // public Event getEvent() {
-    //   return event;
-    // }
-
-    // public void setEvent(Event event) {
-    //   this.event = event;
-    // }
 
     /**
      * Returns the booking budget
@@ -155,4 +160,31 @@ public class BookingModel {
     public void setContactEndTime(String contactEndTime) {
         this.contactEndTime = contactEndTime;
     }
+
+    /**
+     *
+     * makes sure that equality is checked when comparing objects for adding or deletaiton
+     *
+     * @param o object to test equality
+     * @return bookingId if the id is equal
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof BookingModel )) return false;
+        return bookingId != null && bookingId.equals(((BookingModel) o).getBookingId());
+    }
+
+    /**
+     *
+     * returns proper hashcode
+     *
+     * @return hashcode
+     */
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
+
+
 }

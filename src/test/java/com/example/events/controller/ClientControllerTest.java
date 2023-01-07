@@ -4,7 +4,10 @@ package com.example.events.controller;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import com.example.events.model.BookingModel;
 import com.example.events.model.ClientModel;
+import com.example.events.service.BookingService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.Test;
@@ -27,6 +30,9 @@ class ClientControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
+    @Autowired
+    BookingService bookingService;
+
     /**
      * Test the post mapping addClients
      *
@@ -38,7 +44,7 @@ class ClientControllerTest {
 
         mockMvc.perform(MockMvcRequestBuilders
                         .post("/event/client")
-                        .content(asJsonString(new ClientModel(null, "Emmanuel", "Tejeda", "401-481-5645","eman@gmail.com")))
+                        .content(asJsonString(new ClientModel(null, "Emmanuel", "Tejeda", "401-481-5645","eman@gmail.com", null)))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
@@ -93,7 +99,7 @@ class ClientControllerTest {
 
         mockMvc.perform(MockMvcRequestBuilders
                         .put("/event/client/{id}", 1)
-                        .content(asJsonString(new ClientModel(1L, "Jessabella", "Baez", "401-470-3753","jessie@gmail.com")))
+                        .content(asJsonString(new ClientModel(1L, "Jessabella", "Baez", "401-470-3753","jessie@gmail.com", null)))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -104,18 +110,35 @@ class ClientControllerTest {
 
     }
 
+    @Test
+    @Order(5)
+    void addBooking() throws Exception {
+
+        BookingModel booking = new BookingModel();
+        bookingService.saveBooking(booking);
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .put("/event/client/{clientId}/booking/{bookingId}", 1, 1))
+                .andExpect(status().isOk());
+
+
+    }
+
+
+
     /**
      * Test Delete mapping in the Client controller
      *
      * @StatusCode 204 No Content
      */
     @Test
-    @Order(5)
+    @Order(6)
     void deleteClient() throws Exception {
 
         mockMvc.perform(MockMvcRequestBuilders.delete("/event/client/{id}", 1))
                 .andExpect(status().isNoContent());
     }
+
 
     /**
      * Receives a java object and converts it into a JSON string
