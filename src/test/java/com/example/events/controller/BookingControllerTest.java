@@ -47,7 +47,7 @@ public class BookingControllerTest {
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.bookingId").exists());
-        ;
+
 
     }
 
@@ -64,7 +64,7 @@ public class BookingControllerTest {
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("[0].bookingId").value("1"))
+                .andExpect(MockMvcResultMatchers.jsonPath("[0].bookingId").value("2"))
                 .andExpect(MockMvcResultMatchers.jsonPath("[0].cost").value("400.0"));
 
     }
@@ -79,11 +79,11 @@ public class BookingControllerTest {
     public void getBookingById() throws Exception {
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .get("/event/booking/{id}", 1)
+                        .get("/event/booking/{id}", 2)
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.bookingId").value(1));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.bookingId").value(2));
     }
 
 
@@ -97,7 +97,7 @@ public class BookingControllerTest {
     public void updateBooking() throws Exception {
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .put("/event/booking/{id}", 1)
+                        .put("/event/booking/{id}", 2)
                         .content(asJsonString(new BookingModel(2L, 500, "2023-01-23 19:00:00",
                                 1234, "10:00:00", "17:00:00", client)))
                         .contentType(MediaType.APPLICATION_JSON)
@@ -119,7 +119,7 @@ public class BookingControllerTest {
     public void deleteBooking() throws Exception {
 
 
-        mockMvc.perform(MockMvcRequestBuilders.delete("/event/booking/{id}", 1))
+        mockMvc.perform(MockMvcRequestBuilders.delete("/event/booking/{id}", 2))
                 .andExpect(status().isNoContent());
     }
 
