@@ -11,21 +11,23 @@ public class EventModel {
     private Long eventId;
 
     private String typeOfEvent;
-    private String dateofEvent;
+    private String dateOfEvent;
     private String timeOfEvent;
     private String designOrPlanning;
     private String city;
-    private String headCount;
+    private int headCount;
     private double budget;
+
+    //TODO: Add event to booking many to one
 
     public EventModel() {
     }
 
-    public EventModel(Long eventId, String typeOfEvent, String dateofEvent, String timeOfEvent, String designOrPlanning,
-                      String city, String headCount, double budget) {
+    public EventModel(Long eventId, String typeOfEvent, String dateOfEvent, String timeOfEvent, String designOrPlanning,
+                      String city, int headCount, double budget) {
         this.eventId = eventId;
         this.typeOfEvent = typeOfEvent;
-        this.dateofEvent = dateofEvent;
+        this.dateOfEvent = dateOfEvent;
         this.timeOfEvent = timeOfEvent;
         this.designOrPlanning = designOrPlanning;
         this.city = city;
@@ -49,12 +51,12 @@ public class EventModel {
         this.typeOfEvent = typeOfEvent;
     }
 
-    public String getDateofEvent() {
-        return dateofEvent;
+    public String getDateOfEvent() {
+        return dateOfEvent;
     }
 
-    public void setDateofEvent(String dateofEvent) {
-        this.dateofEvent = dateofEvent;
+    public void setDateOfEvent(String dateOfEvent) {
+        this.dateOfEvent = dateOfEvent;
     }
 
     public String getTimeOfEvent() {
@@ -81,11 +83,11 @@ public class EventModel {
         this.city = city;
     }
 
-    public String getHeadCount() {
+    public int getHeadCount() {
         return headCount;
     }
 
-    public void setHeadCount(String headCount) {
+    public void setHeadCount(int headCount) {
         this.headCount = headCount;
     }
 

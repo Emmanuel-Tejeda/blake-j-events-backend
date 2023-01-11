@@ -54,7 +54,7 @@ public class EventService {
 
         EventModel oldEventModel = eventJpa.findById(id).orElseThrow();
 
-        oldEventModel.setDateofEvent(newEventModel.getDateofEvent());
+        oldEventModel.setDateOfEvent(newEventModel.getDateOfEvent());
         oldEventModel.setTimeOfEvent(newEventModel.getTimeOfEvent());
         oldEventModel.setTypeOfEvent(newEventModel.getTypeOfEvent());
         oldEventModel.setBudget(newEventModel.getBudget());
