@@ -1,4 +1,3 @@
 # blake-j-events-backend
 
-testing changes
-Added in new branch!
+A user booking server, fully tested and functional
