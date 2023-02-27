@@ -2,9 +2,9 @@
 
 A user booking server, fully tested and functional
 
-##Features
+## Features
 
-Adds users and booking to that added user
-returns a list of users along with their bookings
-Deletion of bookings along with users
-Proper testing of apis using MockMvc
+- Adds users and booking to that added user
+- Returns a list of users along with their bookings
+- Deletion of bookings along with users
+- Proper testing of apis using MockMvc
